@@ -31,6 +31,8 @@ public class App {
             System.out.println("\u001b[1m\u001b[3mImagem: \u001b[m" + filme.get("image"));
             double classific = Double.parseDouble(filme.get("imDbRating"));
             int numeroEstrelinhas = (int) classific;
+            
+            // se a nota for menor que 9, aparecera em cor vermelha, senão, aparecera em cor verde
             if (classific < 9) {
                 System.out.println("\u001b[38;2;255;255;255m \u001b[48;2;255;0;0mclsClassificação: (" + classific + ")\u001b[0m");
             } else {
