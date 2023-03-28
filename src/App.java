@@ -11,7 +11,7 @@ public class App {
 
         
         // fazer uma conexão HTTP e buscar os top 10 filmes
-        String urlApi = "https://raw.githubusercontent.com/alura-cursos/imersao-java-2-api/main/MostPopularMovies.json";
+        String urlApi = "https://raw.githubusercontent.com/alura-cursos/imersao-java-2-api/main/TopMovies.json";
         URI endereco = URI.create(urlApi);
         var client = HttpClient.newHttpClient();
         var request = HttpRequest.newBuilder(endereco).GET().build();
@@ -25,7 +25,7 @@ public class App {
         
         // exibir e manipular os dados
         System.out.println("⭐ TOP 10 MOVIES ⭐");
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 10; i++) {
             Map<String,String> filme = listaDeFilmes.get(i); 
             System.out.println("\u001b[1m\u001b[3mFilme: \u001b[m" + "\u001b[38;2;255;255;255m \u001b[48;2;255;126;249m" + filme.get("title") + "\u001b[0m");
             System.out.println("\u001b[1m\u001b[3mImagem: \u001b[m" + filme.get("image"));
