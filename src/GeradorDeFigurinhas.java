@@ -1,58 +1,48 @@
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
-
 import javax.imageio.ImageIO;
-
 
 public class GeradorDeFigurinhas {
     
-    public void cria() throws Exception{
 
+    public void cria(InputStream inputStream, String nomeArquivo) throws Exception {
 
-        // LEITURA DA IMAGEM
-        InputStream inputStream = new FileInputStream(new File("entrada/Filme.jpg"));
-        //InputStream inputStream = new URL("https://raw.githubusercontent.com/alura-cursos/imersao-java-2-api/main/TopMovies_1.jpg").openStream();
+        // LENDO A IMAGEM
+        inputStream = new FileInputStream(new File("entrada/Filme.jpg"));
+        // InputStream inputStream = new URL("https://m.media-amazon.com/images/M/MV5BMDFkYTc0MGEtZmNhMC00ZDIzLWFmNTEtODM1ZmRlYWMwMWFmXkEyXkFqcGdeQXVyMTMxODk2OTU@.jpg").openStream();
         BufferedImage imagemOriginal = ImageIO.read(inputStream);
 
-
-        // CRIA NOVA IMAGEM EM MEMÓRIA COM TRANSPARENCIA E COM O TAMANHO NOVO
+        // CRIA NOVA IMAGEM EM MEMÓRIA C/ TRANSPARÊNCIA E C/ UM NOVO TAMANH0
         int largura = imagemOriginal.getWidth();
         int altura = imagemOriginal.getHeight();
         int novaAltura = altura + 200;
         BufferedImage novaImagem = new BufferedImage(largura, novaAltura, BufferedImage.TRANSLUCENT);
 
-        // COPIA A IMAGEM ORIGINAL PARA NOVA IMAGEM (em memória)
+        // COPIA A IMAGEM ORIGINAL P/ UMA NOVA IMAGEM(EM MEMÓRIA)
         Graphics2D graphics = (Graphics2D) novaImagem.getGraphics();
         graphics.drawImage(imagemOriginal, 0, 0, null);
 
-        
-        // ESCREVER UMA FRASE NA NOVA IMAGEM
-        String texto = "TOPZERA";
-        FontMetrics fontMetrics = graphics.getFontMetrics();
-        Rectangle2D retangulo = fontMetrics.getStringBounds(texto, graphics);
-        int larguraTexto = (int) retangulo.getWidth();
-        int posicaoTextoX = (largura - larguraTexto) / 2;
-        graphics.drawString(texto, posicaoTextoX, novaAltura - 100);
-
-        //CONFIG FONTE
-        var fonte = new Font(Font.SERIF, Font.BOLD, 100);
-        graphics.setColor(Color.GREEN);
+        // CONFIGURAÇÃO DE FONTE
+        var fonte = new Font(Font.SANS_SERIF, Font.BOLD, 100);
+        graphics.setColor(Color.YELLOW);
         graphics.setFont(fonte);
 
+        // ESCREVE UMA FRASE NA NOVA IMAGEM
+        graphics.drawString("TOPZERA", 100, novaAltura - 100);
 
-        // ESCREVER A NOVA IMAGEM EM UM ARQUIVO
+        // ESCREVE A NOVA IMAGEM EM UM ARQUIVO
         ImageIO.write(novaImagem, "png", new File("saida/figurinha.png"));
+
     }
+    //MAIN
     public static void main(String[] args) throws Exception {
-        var geradora = new GeradorDeFigurinhas();
-        geradora.cria();
+        var gerador = new GeradorDeFigurinhas();
+        gerador.cria(null, null);
     }
 }
