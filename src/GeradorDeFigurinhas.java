@@ -1,7 +1,12 @@
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
+import java.awt.Shape;
+import java.awt.font.FontRenderContext;
+import java.awt.font.TextLayout;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -31,7 +36,7 @@ public class GeradorDeFigurinhas {
         graphics.drawImage(imagemOriginal, 0, 0, null);
 
         // CONFIGURAÇÃO DE FONTE
-        var fonte = new Font(Font.SANS_SERIF, Font.BOLD, 100);
+        var fonte = new Font("Impact", Font.BOLD, 100);
         graphics.setColor(Color.YELLOW);
         graphics.setFont(fonte);
 
@@ -41,9 +46,23 @@ public class GeradorDeFigurinhas {
         Rectangle2D retangulo = fontMetrics.getStringBounds(texto, graphics);
         int larguraDoTexto = (int) retangulo.getWidth();
         int posicaoTextoX = (largura - larguraDoTexto) /2;
-        graphics.drawString(texto, posicaoTextoX, novaAltura - 100);
+        int posicaoTextoY = novaAltura - 100;
+        graphics.drawString(texto, posicaoTextoX, posicaoTextoY);
 
+        FontRenderContext contorno = graphics.getFontRenderContext();
+        var textLayout = new TextLayout(texto, fonte, contorno);
+        
+        Shape outline =  textLayout.getOutline(null);
+        AffineTransform transform = graphics.getTransform();
+        transform.translate(posicaoTextoX, posicaoTextoY);
+        graphics.setTransform(transform);
 
+        var outlineStroke = new BasicStroke(largura * 0.004f);
+        graphics.setStroke(outlineStroke);
+
+        graphics.setColor(Color.BLACK);
+        graphics.draw(outline);
+        graphics.setClip(outline);
 
         // ESCREVE A NOVA IMAGEM EM UM ARQUIVO
         ImageIO.write(novaImagem, "png", new File("saida/figurinha.png"));
