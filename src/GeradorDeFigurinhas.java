@@ -10,7 +10,6 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStream;
 
 import javax.imageio.ImageIO;
@@ -18,11 +17,11 @@ import javax.imageio.ImageIO;
 public class GeradorDeFigurinhas {
     
 
-    public void cria(InputStream inputStream, String nomeArquivo) throws Exception {
+    public void cria(InputStream inputStream, String nomeArquivo, String texto) throws Exception {
 
         // LENDO A IMAGEM
-        inputStream = new FileInputStream(new File("entrada/Filme.jpg"));
-        // InputStream inputStream = new URL("https://m.media-amazon.com/images/M/MV5BMDFkYTc0MGEtZmNhMC00ZDIzLWFmNTEtODM1ZmRlYWMwMWFmXkEyXkFqcGdeQXVyMTMxODk2OTU@.jpg").openStream();
+        //inputStream = new FileInputStream(new File("entrada/Filme.jpg"));
+        //String URL = ("https://m.media-amazon.com/images/M/MV5BMDFkYTc0MGEtZmNhMC00ZDIzLWFmNTEtODM1ZmRlYWMwMWFmXkEyXkFqcGdeQXVyMTMxODk2OTU@.jpg").openStream();
         BufferedImage imagemOriginal = ImageIO.read(inputStream);
 
         // CRIA NOVA IMAGEM EM MEMÓRIA C/ TRANSPARÊNCIA E C/ UM NOVO TAMANH0
@@ -41,7 +40,7 @@ public class GeradorDeFigurinhas {
         graphics.setFont(fonte);
 
         // ESCREVE UMA FRASE NA NOVA IMAGEM
-        String texto = "FILMAÇO";
+
         FontMetrics fontMetrics = graphics.getFontMetrics();
         Rectangle2D retangulo = fontMetrics.getStringBounds(texto, graphics);
         int larguraDoTexto = (int) retangulo.getWidth();
@@ -65,12 +64,8 @@ public class GeradorDeFigurinhas {
         graphics.setClip(outline);
 
         // ESCREVE A NOVA IMAGEM EM UM ARQUIVO
-        ImageIO.write(novaImagem, "png", new File("saida/figurinha.png"));
+        ImageIO.write(novaImagem, "png", new File(nomeArquivo));
 
     }
-    //MAIN
-    public static void main(String[] args) throws Exception {
-        var gerador = new GeradorDeFigurinhas();
-        gerador.cria(null, null);
-    }
+
 }
