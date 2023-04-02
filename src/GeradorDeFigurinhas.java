@@ -17,7 +17,7 @@ import javax.imageio.ImageIO;
 public class GeradorDeFigurinhas {
     
 
-    public void cria(InputStream inputStream, String nomeArquivo, String texto) throws Exception {
+    public void cria(InputStream inputStream, String nomeArquivo, String texto, InputStream inputStreamSobreposicao) throws Exception {
 
         // LENDO A IMAGEM
         //inputStream = new FileInputStream(new File("entrada/Filme.jpg"));
@@ -33,6 +33,10 @@ public class GeradorDeFigurinhas {
         // COPIA A IMAGEM ORIGINAL P/ UMA NOVA IMAGEM(EM MEMÓRIA)
         Graphics2D graphics = (Graphics2D) novaImagem.getGraphics();
         graphics.drawImage(imagemOriginal, 0, 0, null);
+
+        BufferedImage imagemSobreposicao = ImageIO.read(inputStreamSobreposicao);
+        int posicaoImagemSobreposicaoY = novaAltura - imagemSobreposicao.getHeight();
+        graphics.drawImage(imagemSobreposicao, 0, posicaoImagemSobreposicaoY, null);
 
         // CONFIGURAÇÃO DE FONTE
         var fonte = new Font("Impact", Font.BOLD, 100);

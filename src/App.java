@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URL;
@@ -40,12 +41,15 @@ public class App {
             
             // se a nota for menor que 9, aparecera em cor vermelha, senão, aparecera em cor verde
             String textoFig;
+            InputStream imagemAna;
             if (classific < 9) {
                 System.out.println("\u001b[38;2;255;255;255m \u001b[48;2;255;0;0mclsClassificação: (" + classific + ")\u001b[0m");
-                textoFig = "TOPZERA";
+                textoFig = "PERCA DE TEMPO";
+                imagemAna = new FileInputStream(new File("sobreposicao/anaSemTempo.jpeg"));
             } else {
                 System.out.println("\u001b[38;2;255;255;255m \u001b[48;2;42;255;0mClassificação: (" + classific + ")\u001b[0m");
-                textoFig = "PERCA DE TEMPO";
+                textoFig = "BOM DEMAIS";
+                imagemAna = new FileInputStream(new File("sobreposicao/anaSatisfeita.jpeg"));
             }
             
             for (int estrelinhas = 1; estrelinhas <= numeroEstrelinhas; estrelinhas++) {
@@ -63,7 +67,7 @@ public class App {
             InputStream inputStream = new URL(urlImagem).openStream();
             String nomeArquivo = "figurinhas/" + titulo + ".png";
 
-            geradora.cria(inputStream, nomeArquivo, textoFig);
+            geradora.cria(inputStream, nomeArquivo, textoFig, imagemAna);
            
             
         }
